@@ -59,5 +59,5 @@ $router->post('/praise', function () {
 });
 
 $router->get('/translations', function () {
-    return json_encode(array("translations" => array(array("id" => 1, "text" => "text 1 release test", "score" => 0.98))));
+    return json_encode(array("translations" => array(array("id" => 1, "text" => "text 1", "score" => 0.98))));
 });
