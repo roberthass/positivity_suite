@@ -23,13 +23,6 @@ class TranslationsController extends Controller
             );
         }
 
-        $helper[] = array(
-            "id"    => 123, 
-            "text"  => "geht so", 
-            "score" => 1-round(rand(0, 10)/100,2),
-            "bla"   => '%' . $search . '%'
-        );
-
         return array("translations" => $helper);
     }
 }
