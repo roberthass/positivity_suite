@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\CoursesController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -17,47 +19,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/courses', function () {
-    return array("courses" => array(array("id" => 1, "name" => "Test Kurs 1"), array("id" => 2, "name" => "Test Kurs 2")));
-});
+$router->get('/courses', 'CoursesController@getCourses');
 
-$router->get('/students', function () {
-    $now = new \DateTime();
-    $students = array(
-        array(
-            "id" => 1,
-            "firstNane" => "Gina",
-            "givenName" => "Duncan",
-            "photoUrl" => "https://randomuser.me/api/portraits/women/65.jpg",
-            "lastPraise" => $now->format("Y-m-d H:i"),
-            "praiseCount" => 24
-        ),
-        array(
-            "id" => 2,
-            "firstNane" => "Jessie",
-            "givenName" => "Robertson",
-            "photoUrl" => "https://randomuser.me/api/portraits/men/79.jpg",
-            "lastPraise" => $now->format("Y-m-d H:i"),
-            "praiseCount" => 18
-        )
-    );
-    return array("students" => $students);
-});
+$router->get('/students', 'StudentsController@getStudents');
+$router->post('/praise', 'StudentsController@postPraiseStudent');
 
-$router->post('/praise', function () {
-    $now = new \DateTime();
-
-    $student =  array(
-        "id" => 2,
-        "firstNane" => "Jessie",
-        "givenName" => "Robertson",
-        "photoUrl" => "https://randomuser.me/api/portraits/men/79.jpg",
-        "lastPraise" => $now->format("Y-m-d H:i"),
-        "praiseCount" => 18
-    );
-    return $student;
-});
-
-$router->get('/translations', function () {
-    return array("translations" => array(array("id" => 1, "text" => "text 1", "score" => 0.98)));
-});
+$router->get('/translations', 'TranslationsController@getTranslations');
