@@ -15,12 +15,25 @@ class CourseSeeder extends Seeder
     public function run()
     {
         $now = new \DateTime();
-        for ($i = 1; $i < 4; $i++) {
-            DB::table('courses')->insert([
-                'name' => "Test Kurs " . $i,
-                'created_at' => $now->format('Y-m-d H:i:s'),
-                'updated_at' => $now->format('Y-m-d H:i:s'),
-            ]);
+        $j = 1;
+
+        $users = DB::table('users')
+            ->select('id')
+            ->get();
+
+        foreach ($users as $userId) {
+            for ($i = 1; $i < 4; $i++) {
+                DB::table('courses')->insert([
+                    'name' => "Test Kurs " . $j,
+                    'user_id' => $userId->id,
+                    'created_at' => $now->format('Y-m-d H:i:s'),
+                    'updated_at' => $now->format('Y-m-d H:i:s'),
+                ]);
+
+                $j++;
+            }
         }
+
+
     }
 }
