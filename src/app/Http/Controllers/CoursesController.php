@@ -11,7 +11,7 @@ class CoursesController extends Controller
 
         $helper = array();
 
-        $results = Course::where('user_id', $request->query('lehrer'))->get();
+        $results = Course::where('user_id', $request->query('user'))->get();
 
         foreach ($results as $course) {
             $helper[] = array("id" => $course->id, "name" => $course->name);
