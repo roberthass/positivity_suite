@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+
 class CoursesController extends Controller
 {
     public function getCourses() {
 
-        $courses = array("courses" => array(array("id" => 1, "name" => "Test Kurs 1"), array("id" => 2, "name" => "Test Kurs 2")));
+        $helper = array();
 
-        return $courses;
+        foreach (Course::all() as $course) {
+            $helper[] = array("id" => $course->id, "name" => $course->name);
+        }
+
+        return array("courses" => $helper);
     }
 }
