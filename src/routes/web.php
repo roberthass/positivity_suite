@@ -18,7 +18,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/courses', function () {
-    return json_encode(array("courses" => array(array("id" => 1, "name" => "Test Kurs 1"), array("id" => 2, "name" => "Test Kurs 2"))));
+    return array("courses" => array(array("id" => 1, "name" => "Test Kurs 1"), array("id" => 2, "name" => "Test Kurs 2")));
 });
 
 $router->get('/students', function () {
@@ -41,7 +41,7 @@ $router->get('/students', function () {
             "praiseCount" => 18
         )
     );
-    return json_encode(array("students" => $students));
+    return array("students" => $students);
 });
 
 $router->post('/praise', function () {
@@ -55,9 +55,9 @@ $router->post('/praise', function () {
         "lastPraise" => $now->format("Y-m-d H:i"),
         "praiseCount" => 18
     );
-    return json_encode($student);
+    return $student;
 });
 
 $router->get('/translations', function () {
-    return json_encode(array("translations" => array(array("id" => 1, "text" => "text 1", "score" => 0.98))));
+    return array("translations" => array(array("id" => 1, "text" => "text 1", "score" => 0.98)));
 });
