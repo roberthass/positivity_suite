@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  positivity_suite_db:
+    container_name: positivity_suite
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: positivity_suite_db
+      MYSQL_USER: positivity_suite_user
+      MYSQL_PASSWORD: positivity_suite_pass
+      MYSQL_ROOT_PASSWORD: root
+    command:
+      --max_allowed_packet=1024M
+
+  positivity_suite_web:
+    container_name: positivity_suite_web
+    image: webdevops/php-apache-dev:7.4
+    ports:
+      - 8080:80
+      - 8443:443
+    environment:
+      - LOG_STDOUT=/tmp/logs/productivity_suite.stdout.log
+      - LOG_STDERR=/tmp/logs/productivity_suite.stderr.log
+      - PHP_DATE_TIMEZONE=Europe/Berlin
+      - WEB_DOCUMENT_ROOT=/var/www/html/productivity_suite/public
+      - php.opcache.enable=0
+    working_dir: /var/www/html/productivity_suite
+    volumes:
+      - ./src:/var/www/html/productivity_suite
+      - ./logs:/tmp/logs
+
