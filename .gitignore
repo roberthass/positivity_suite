@@ -1,3 +1,8 @@
 .idea*
-src/vendor
 logs/*
+
+src/vendor
+src/Homestead.json
+src/Homestead.yaml
+.env
+src/.phpunit.result.cache
