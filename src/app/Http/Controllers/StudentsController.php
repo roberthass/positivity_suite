@@ -17,32 +17,37 @@ class StudentsController extends Controller
         foreach($results as $result) {
             $students = Student::where('id', $result->student_id)->get();
             foreach($students as $student) {
+                $praises = DB::select('select count(student_id) as count_praises, max(updated_at) as last_praise from praises where student_id=?', [$student->id]);
                 $helper[] = array(
                     'id' => $student->id,
                     'firstName' => $student->first_name,
                     'givenName' => $student->given_name,
                     'photoUrl' => $student->photo_url,
-                    'lastPraise' => $student->last_praise,
-                    'praise_count' => $student->praise_count
+                    'lastPraise' => $praises[0]->last_praise,
+                    'praise_count' => $praises[0]->count_praises
                 );
             }
         }
         return array("students" => $helper);
     }
 
-    public function postPraiseStudent() {
+    public function postPraiseStudent(Request $request) {
 
         $now = new \DateTime();
 
-        $student =  array(
-            "id" => 2,
-            "firstNane" => "Jessie",
-            "givenName" => "Robertson",
-            "photoUrl" => "https://randomuser.me/api/portraits/men/79.jpg",
-            "lastPraise" => $now->format("Y-m-d H:i"),
-            "praiseCount" => 18
-        );
-        return $student;
+        $result = array( );
+
+        $teacher = $request->post('teacherId');
+        $student = $request->post('studentId');
+
+        DB::table('praises')->insert([
+            'student_id' => $student,
+            'teacher_id' => $teacher,
+            'created_at' => $now,
+            'updated_at' => $now
+        ]);
+
+        return $result;
 
     }
 }
