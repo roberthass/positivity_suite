@@ -22,6 +22,6 @@ $router->get('/', function () use ($router) {
 $router->get('/courses', 'CoursesController@getCourses');
 
 $router->get('/students', 'StudentsController@getStudents');
-$router->post('/praise', 'StudentsController@postPraiseStudent');
+$router->get('/praise', 'StudentsController@getPraiseStudent');
 
 $router->get('/translations', 'TranslationsController@getTranslations');

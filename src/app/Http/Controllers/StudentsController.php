@@ -53,14 +53,14 @@ class StudentsController extends Controller
         return array("students" => $helper2);
     }
 
-    public function postPraiseStudent(Request $request) {
+    public function getPraiseStudent(Request $request) {
 
         $now = new \DateTime();
 
-        $result = array( );
+        $result = array();
 
-        $teacher = $request->post('teacherId');
-        $student = $request->post('studentId');
+        $teacher = $request->query('teacherId');
+        $student = $request->query('studentId');
 
         DB::table('praises')->insert([
             'student_id' => $student,
