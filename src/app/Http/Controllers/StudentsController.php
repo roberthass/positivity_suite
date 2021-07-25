@@ -12,6 +12,14 @@ class StudentsController extends Controller
 
         $helper = array();
 
+        $topToPraise = $request->query('toptopraise');
+
+        if (isset($topToPraise)) {
+            $limit = ($topToPraise == 0) ? 200 : $topToPraise;
+        } else {
+            $limit = 200;
+        }
+
         $results = DB::select("SELECT * FROM student_course WHERE course_id=". $request->query('course') );
 
         foreach($results as $result) {
@@ -28,7 +36,21 @@ class StudentsController extends Controller
                 );
             }
         }
-        return array("students" => $helper);
+
+        usort( $helper, 
+                function($a,$b) { 
+                    if ($a['praise_count'] == $b['praise_count']) {
+                        return 0;
+                    }
+                    return ($a['praise_count'] < $b['praise_count'] ? -1 : 1 );
+                } 
+        );
+
+        $limit = ($limit > count($helper)) ? count($helper) : $limit;
+        for($count = 0; $count < $limit; $count++) {
+            $helper2[] = $helper[$count];
+        }
+        return array("students" => $helper2);
     }
 
     public function postPraiseStudent(Request $request) {
